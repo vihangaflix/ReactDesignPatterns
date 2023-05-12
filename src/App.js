@@ -1,30 +1,14 @@
-import { ProductInfo } from "./ProductInfo";
-import ResourceLoader from "./ResourceLoader";
+import printProps from "./printProps";
 import UserInfo from "./UserInfo";
-import DataSource from "./DataSource";
-import axios from "axios";
+import withUser from "./withUser";
+import UserInfoForm from "./UserInfoForm";
 
-const getServerData = url => async () => {
-    const response = await axios.get(url);
-    return response.data;
-}
+const UserInfoWithLoader = withUser(UserInfo, "234")
 
-const getLocalStorageData = key => () => {
-    return localStorage.getItem(key);
-}
-
-const Text = ({ message }) => <h1>{message}</h1>
 
 function App() {
     return (
-        <>
-            <DataSource getDataFunc={getServerData("/users/234")} resourceName="user">
-                <UserInfo />
-            </DataSource>
-            <DataSource getDataFunc={getLocalStorageData("message")} resourceName="message">
-                <Text />
-            </DataSource>
-        </>
+        <UserInfoForm/>
     );
 }
 
